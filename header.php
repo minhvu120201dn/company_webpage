@@ -21,10 +21,11 @@
                                 Products
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="?page=products">Medicine</a></li>
-                                <li><a class="dropdown-item" href="?page=products">Technology</a></li>
+                                <li><a class="dropdown-item" href="?page=products">All</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="?page=products">Others</a></li>
+                                <li><a class="dropdown-item" href="?page=products&category=medicine">Medicine</a></li>
+                                <li><a class="dropdown-item" href="?page=products&category=technology">Technology</a></li>
+                                <li><a class="dropdown-item" href="?page=products&category=clothes">Clothes</a></li>
                             </ul>
                         </li>
                     <?php
@@ -45,22 +46,9 @@
                         </li>
                     </ul>
                     <?php }?>
-                    <!-- <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form> -->
                 </div>
             </div>
         </nav>
         </header>
     </div>
 </header>
-
-<?php    
-    if (isset($_GET["page"])) {
-        include $_GET["page"].".php";
-    }
-    else {
-        include "home.php";
-    }
-?>

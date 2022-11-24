@@ -7,8 +7,14 @@
     </head>
     <body>
         <?php
-            session_start();
-            include "header.php";
+        session_start();
+        include "header.php";
+        if (isset($_GET["page"])) {
+            include $_GET["page"]."/".$_GET["page"].".php";
+        }
+        else {
+            include "home/home.php";
+        }
         ?>
         <footer>
             <div class="row p-5 my-5 bg-primary text-white text-center">

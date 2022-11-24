@@ -1,13 +1,11 @@
 <?php
 session_start();
+include "../utils.php";
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db_name = "company";
-$conn = new mysqli($servername, $username, $password, $db_name);
+$conn = connect_to_database();
 
-if (isset($_POST["first-name"]) &&isset($_POST["middle-name"]) && isset($_POST["last-name"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm-password"])) {
+$requirements = ["first-name", "middle-name", "last-name", "email", "password", "confirm-password"];
+if (all_requirements_are_set($requirements)) {
     function validate($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -57,7 +55,15 @@ else if ($password != $confirm_password) {
     exit();
 }
 
-$sql = "INSERT INTO clients (first_name, middle_name, last_name, email, password) VALUES ('$first_name', '$middle_name', '$last_name', '$email', '$password')";
+$is_admin = 0;
+$password_hash = password_hash($password, PASSWORD_DEFAULT);
+if (empty($middle_name)) {
+    $sql = "INSERT INTO users (first_name, middle_name, last_name, is_admin, email, password) VALUES ('$first_name', NULL, '$last_name', $is_admin, '$email', '$password_hash')";
+}
+else {
+    $sql = "INSERT INTO users (first_name, middle_name, last_name, is_admin, email, password) VALUES ('$first_name', '$middle_name', '$last_name', $is_admin, '$email', '$password_hash')";
+}
+
 if(!mysqli_query($conn, $sql)) {
     header("Location: ../index.php?page=register&error=This email address has already been used");
     exit();
@@ -66,6 +72,7 @@ else {
     $_SESSION["first_name"] = $first_name;
     $_SESSION["middle_name"] = $middle_name;
     $_SESSION["last_name"] = $last_name;
+    $_SESSION["is_admin"] = $is_admin;
     $_SESSION["email"] = $email;
     header("Location: ../index.php");
     exit();

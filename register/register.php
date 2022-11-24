@@ -1,5 +1,5 @@
 <main class="container-sm p-5 my-5 border form-signin">
-    <form action="server/register_processing.php" method="post">
+    <form action="register/register_processing.php" method="post">
         <h2 class="text-primary">Register</h1>
         <div class="row g-3 mb-3">
             <div class="col">
@@ -28,9 +28,9 @@
             <input type="password" class="form-control" name="confirm-password">
         </div>
         <?php
-            if (isset($_GET["error"])) {
-                ?><p class="error-signin"><?php echo $_GET["error"];?></p><?php
-            }
+        if (isset($_GET["error"])) {
+            ?><p class="error-submit" style="color:red;"><?php echo $_GET["error"];?></p><?php
+        }
         ?>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
